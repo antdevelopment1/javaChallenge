@@ -18,15 +18,15 @@ public class DemoApplication {
 
 	void createConnection() {
 		try {
-			// Class.forName("com.mysql.jdbc.Driver");
+			Class.forName ("org.h2.Driver");;
 			// Get a connection to database
-			Connection myConn = DriverManager.getConnection("jdbc:mysql://localhost3306/task", "root", " ");
+			Connection myConn = DriverManager.getConnection("jdbc:h2://localhost:8080/task", "root", " ");
 
 			// Create a statement
 			Statement myStmt = myConn.createStatement();
 
 			// Excecute SQl query
-			ResultSet myRs = myStmt.executeQuery("select * from blog");
+			ResultSet myRs = myStmt.executeQuery("select * from blog;");
 
 			// Process the results
 			while (myRs.next()) {
