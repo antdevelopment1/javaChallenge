@@ -20,7 +20,7 @@ public class DemoApplication {
 		try {
 			Class.forName ("org.h2.Driver");;
 			// Get a connection to database
-			Connection myConn = DriverManager.getConnection("jdbc:h2://localhost:8080/task", "root", " ");
+			Connection myConn = DriverManager.getConnection("jdbc:h2://localhost:8080/task", "root", "Robinhood2598");
 
 			// Create a statement
 			Statement myStmt = myConn.createStatement();
