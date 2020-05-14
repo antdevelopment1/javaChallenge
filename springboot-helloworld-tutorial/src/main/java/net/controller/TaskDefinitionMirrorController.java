@@ -20,63 +20,59 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import net.exception.ResourceNotFoundException;
-import net.model.Task_definition;
-import net.repository.TaskDefinition;
-
+import net.model.Task_definition_mirror;
+import net.repository.TaskDefinitionMirror;
 
 @CrossOrigin(origins = "http://localhost:4200")
 @RestController
-@RequestMapping("/api/v1")
-public class EmployeeController {
-	@Autowired
-	private TaskDefinition taskDefinition;
+@RequestMapping("/testMirror")
 
-	// @Autowired
-	// private TaskDefinitionMirror taskDefinitionMirror;
+public class TaskDefinitionMirrorController {
+    @Autowired
+    private TaskDefinitionMirror taskDefinitionMirror;
+    
 
-	@GetMapping("/employees")
-	public List<Task_definition> getAllEmployees() {
-		return taskDefinition.findAll();
+    @GetMapping("/getAll")
+	public List<Task_definition_mirror> getAllEmployees() {
+		return taskDefinitionMirror.findAll();
 	}
 
-	@GetMapping("/employees/{id}")
-	public ResponseEntity<Task_definition> getEmployeeById(@PathVariable(value = "id") Long employeeId)
+	@GetMapping("/getSingle/{id}")
+	public ResponseEntity<Task_definition_mirror> getEmployeeById(@PathVariable(value = "id") Long employeeId)
 			throws ResourceNotFoundException {
-		Task_definition employee = taskDefinition.findById(employeeId)
+		Task_definition_mirror employee = taskDefinitionMirror.findById(employeeId)
 				.orElseThrow(() -> new ResourceNotFoundException("Employee not found for this id :: " + employeeId));
 		return ResponseEntity.ok().body(employee);
 	}
 
-	@PostMapping("/employees")
-	public Task_definition createEmployee(@Valid @RequestBody Task_definition employee) {
-		return taskDefinition.save(employee);
+	@PostMapping("/create")
+	public Task_definition_mirror createTest(@Valid @RequestBody Task_definition_mirror employee) {
+		return taskDefinitionMirror.save(employee);
 	}
 
-	@PutMapping("/employees/{id}")
-	public ResponseEntity<Task_definition> updateEmployee(@PathVariable(value = "id") Long employeeId,
-			@Valid @RequestBody Task_definition employeeDetails) throws ResourceNotFoundException {
-		Task_definition employee = taskDefinition.findById(employeeId)
+	@PutMapping("/updateSingle/{id}")
+	public ResponseEntity<Task_definition_mirror> updateEmployee(@PathVariable(value = "id") Long employeeId,
+			@Valid @RequestBody Task_definition_mirror employeeDetails) throws ResourceNotFoundException {
+		Task_definition_mirror employee = taskDefinitionMirror.findById(employeeId)
 				.orElseThrow(() -> new ResourceNotFoundException("Employee not found for this id :: " + employeeId));
 
 		// employee.setEmailId(employeeDetails.getEmailId());
 		employee.setname(employeeDetails.getname());
 		employee.setdescription(employeeDetails.getdescription());
-		final Task_definition updatedEmployee = taskDefinition.save(employee);
+		final Task_definition_mirror updatedEmployee = taskDefinitionMirror.save(employee);
 		return ResponseEntity.ok(updatedEmployee);
 	}
 
-	@DeleteMapping("/employees/{id}")
+	@DeleteMapping("/deleteSingle/{id}")
 	public Map<String, Boolean> deleteEmployee(@PathVariable(value = "id") Long employeeId)
 			throws ResourceNotFoundException {
-		Task_definition employee = taskDefinition.findById(employeeId)
+		Task_definition_mirror employee = taskDefinitionMirror.findById(employeeId)
 				.orElseThrow(() -> new ResourceNotFoundException("Employee not found for this id :: " + employeeId));
 
-		taskDefinition.delete(employee);
+		taskDefinitionMirror.delete(employee);
 		Map<String, Boolean> response = new HashMap<>();
 		response.put("deleted", Boolean.TRUE);
 		return response;
 	}
+    
 }
-
-
-
