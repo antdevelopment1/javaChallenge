@@ -20,56 +20,74 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import net.exception.ResourceNotFoundException;
-import net.model.Employee;
-import net.repository.EmployeeRepository;
+import net.model.Task_definition;
+import net.model.Task_definition_mirror;
+import net.repository.TaskDefinition;
+import net.repository.TaskDefinitionMirror;
 
 @CrossOrigin(origins = "http://localhost:4200")
 @RestController
 @RequestMapping("/api/v1")
 public class EmployeeController {
 	@Autowired
-	private EmployeeRepository employeeRepository;
+	private TaskDefinition taskDefinition;
+
+	// @Autowired
+	// private TaskDefinitionMirror taskDefinitionMirror;
 
 	@GetMapping("/employees")
-	public List<Employee> getAllEmployees() {
-		return employeeRepository.findAll();
+	public List<Task_definition> getAllEmployees() {
+		return taskDefinition.findAll();
 	}
 
 	@GetMapping("/employees/{id}")
-	public ResponseEntity<Employee> getEmployeeById(@PathVariable(value = "id") Long employeeId)
+	public ResponseEntity<Task_definition> getEmployeeById(@PathVariable(value = "id") Long employeeId)
 			throws ResourceNotFoundException {
-		Employee employee = employeeRepository.findById(employeeId)
+		Task_definition employee = taskDefinition.findById(employeeId)
 				.orElseThrow(() -> new ResourceNotFoundException("Employee not found for this id :: " + employeeId));
 		return ResponseEntity.ok().body(employee);
 	}
 
 	@PostMapping("/employees")
-	public Employee createEmployee(@Valid @RequestBody Employee employee) {
-		return employeeRepository.save(employee);
+	public Task_definition createEmployee(@Valid @RequestBody Task_definition employee) {
+		return taskDefinition.save(employee);
 	}
 
 	@PutMapping("/employees/{id}")
-	public ResponseEntity<Employee> updateEmployee(@PathVariable(value = "id") Long employeeId,
-			@Valid @RequestBody Employee employeeDetails) throws ResourceNotFoundException {
-		Employee employee = employeeRepository.findById(employeeId)
+	public ResponseEntity<Task_definition> updateEmployee(@PathVariable(value = "id") Long employeeId,
+			@Valid @RequestBody Task_definition employeeDetails) throws ResourceNotFoundException {
+		Task_definition employee = taskDefinition.findById(employeeId)
 				.orElseThrow(() -> new ResourceNotFoundException("Employee not found for this id :: " + employeeId));
 
-		employee.setEmailId(employeeDetails.getEmailId());
-		employee.setLastName(employeeDetails.getLastName());
-		employee.setFirstName(employeeDetails.getFirstName());
-		final Employee updatedEmployee = employeeRepository.save(employee);
+		// employee.setEmailId(employeeDetails.getEmailId());
+		employee.setname(employeeDetails.getname());
+		employee.setdescription(employeeDetails.getdescription());
+		final Task_definition updatedEmployee = taskDefinition.save(employee);
 		return ResponseEntity.ok(updatedEmployee);
 	}
 
 	@DeleteMapping("/employees/{id}")
 	public Map<String, Boolean> deleteEmployee(@PathVariable(value = "id") Long employeeId)
 			throws ResourceNotFoundException {
-		Employee employee = employeeRepository.findById(employeeId)
+		Task_definition employee = taskDefinition.findById(employeeId)
 				.orElseThrow(() -> new ResourceNotFoundException("Employee not found for this id :: " + employeeId));
 
-		employeeRepository.delete(employee);
+		taskDefinition.delete(employee);
 		Map<String, Boolean> response = new HashMap<>();
 		response.put("deleted", Boolean.TRUE);
 		return response;
 	}
+
+
+	// @PostMapping("/test")
+	// public Task_definition_mirror createTest(@Valid @RequestBody Task_definition_mirror employee) {
+	// 	return taskDefinition.save(employee);
+	// }
+
+
+
+	// @PostMapping("/newroute")
+	// public Task_definition_mirror createEmployee(@Valid @RequestBody Task_definition_mirror taskDefinitionMirror) {
+	// 	return Task_definition_mirror.save(taskDefinitionMirror);
+	// }
 }
