@@ -61,6 +61,19 @@
 				<mainClass>net.Application</mainClass>
             </configuration>
 		</plugin>
+		<plugin>
+    		<groupId>org.flywaydb</groupId>
+    		<artifactId>flyway-maven-plugin</artifactId>
+    		<version>4.0.3</version> 
+			<configuration>
+        		<user>sa</user>
+        		<password>password</password>
+        		<schemas>
+            		<schema>V1_0__task_definition.sql</schema>
+					<schema>V2_0__task_definition_mirror.sql</schema>
+        		</schemas>
+    		</configuration>
+		</plugin>
         <!-- default lifecycle, jar packaging: see https://maven.apache.org/ref/current/maven-core/default-bindings.html#Plugin_bindings_for_jar_packaging -->
         <plugin>
           <artifactId>maven-resources-plugin</artifactId>
