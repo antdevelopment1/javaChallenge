@@ -3,9 +3,10 @@ package net.repository;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import net.model.Employee;
+import net.model.Task_definition;
 
 @Repository
-public interface EmployeeRepository extends JpaRepository<Employee, Long>{
+public interface TaskDefinition extends JpaRepository<Task_definition, Long>{
 
 }
+
