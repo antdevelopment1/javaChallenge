@@ -16,12 +16,19 @@ import net.model.Task_definition_mirror;
 
 public class SpringRestClient {
 
-	private static final String GET_ALL_TASK_ENDPOINT_URL = "http://localhost:8080/test/getAll";
-	private static final String GET_TASK_ENDPOINT_URL = "http://localhost:8080/test/getSingle/{id}";
-	private static final String CREATE_TASK_ENDPOINT_URL = "http://localhost:8080/test/create";
-	private static final String UPDATE_TASK_ENDPOINT_URL = "http://localhost:8080/test/updateSingle/{id}";
-	private static final String DELETE_TASK_ENDPOINT_URL = "http://localhost:8080/test/deleteSingle/{id}";
-	private static final String CREATE_TASK_MIRROR_ENDPOINT_URL = "http://localhost:8080/api/v1/test";
+	private static final String GET_ALL_TASK_ENDPOINT_URL = "http://localhost:8080/task/getAll";
+	private static final String GET_TASK_ENDPOINT_URL = "http://localhost:8080/task/getSingle/{id}";
+	private static final String CREATE_TASK_ENDPOINT_URL = "http://localhost:8080/task/create";
+	private static final String UPDATE_TASK_ENDPOINT_URL = "http://localhost:8080/task/updateSingle/{id}";
+	private static final String DELETE_TASK_ENDPOINT_URL = "http://localhost:8080/task/deleteSingle/{id}";
+
+	private static final String GET_ALL_TASK_MIRROR_ENDPOINT_URL = "http://localhost:8080/taskMirro/getAll";
+	private static final String GET_TASK_MIRROR_ENDPOINT_URL = "http://localhost:8080/taskMirro/getSingle/{id}";
+	private static final String CREATE_TASK_MIRROR_ENDPOINT_URL = "http://localhost:8080/taskMirro/create";
+	private static final String UPDATE_TASK_MIRROR_ENDPOINT_URL = "http://localhost:8080/taskMirro/updateSingle/{id}";
+	private static final String DELETE_TASK_MIRROR_ENDPOINT_URL = "http://localhost:8080/taskMirro/deleteSingle/{id}";
+
+
 	private static RestTemplate restTemplate = new RestTemplate();
 
 	public static void main(String[] args) {
@@ -35,18 +42,28 @@ public class SpringRestClient {
 		springRestClient.getTaskById();
 		
 		// Step3: get all Tasks
-		springRestClient.getTask();
+		springRestClient.getAllTask();
 		
 		// Step4: Update Task with id = 1
 		springRestClient.updateTask();
 		
 		// Step5: Delete Task with id = 1
 		springRestClient.deleteTask();
-
+	
 		springRestClient.createTaskMirror();
+
+		springRestClient.getTaskMirrorById();
+
+		springRestClient.getAllTaskMirror();
+
+		springRestClient.updateTaskMirror();
+
+		springRestClient.deleteTaskMirror();
 	}
 
-	private void getTask() {
+	// Task Methods
+
+	private void getAllTask() {
 
 		HttpHeaders headers = new HttpHeaders();
 		headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
@@ -94,6 +111,30 @@ public class SpringRestClient {
 		restTemplate.delete(DELETE_TASK_ENDPOINT_URL, params);
 	}
 
+	// Task Mirror Methods
+
+	private void getAllTaskMirror() {
+
+		HttpHeaders headers = new HttpHeaders();
+		headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
+		HttpEntity<String> entity = new HttpEntity<String>("parameters", headers);
+
+		ResponseEntity<String> result = restTemplate.exchange(GET_ALL_TASK_MIRROR_ENDPOINT_URL, HttpMethod.GET, entity,
+				String.class);
+
+		System.out.println(result);
+	}
+
+	private void getTaskMirrorById() {
+
+		Map<String, String> params = new HashMap<String, String>();
+		params.put("id", "1");
+
+		RestTemplate restTemplate = new RestTemplate();
+		Task_definition_mirror result = restTemplate.getForObject(GET_TASK_MIRROR_ENDPOINT_URL, Task_definition_mirror.class, params);
+
+		System.out.println(result);
+	}
 
 	private void createTaskMirror() {
 
@@ -104,4 +145,20 @@ public class SpringRestClient {
 
 		System.out.println(result);
 	}
+
+	private void updateTaskMirror() {
+		Map<String, String> params = new HashMap<String, String>();
+		params.put("id", "1");
+		Task_definition_mirror updatedTask = new Task_definition_mirror("admin123", "admin123");
+		RestTemplate restTemplate = new RestTemplate();
+		restTemplate.put(UPDATE_TASK_MIRROR_ENDPOINT_URL, updatedTask, params);
+	}
+
+	private void deleteTaskMirror() {
+		Map<String, String> params = new HashMap<String, String>();
+		params.put("id", "1");
+		RestTemplate restTemplate = new RestTemplate();
+		restTemplate.delete(DELETE_TASK_MIRROR_ENDPOINT_URL, params);
+	}
+
 }
