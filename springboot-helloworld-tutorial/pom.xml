@@ -69,8 +69,8 @@
         		<user>sa</user>
         		<password>password</password>
         		<schemas>
-            		<schema>V1_0__task_definition.sql</schema>
-					<schema>V2_0__task_definition_mirror.sql</schema>
+            		<schema>V2_0__task_definition.sql</schema>
+					<schema>V3_0__task_definition_mirror.sql</schema>
         		</schemas>
     		</configuration>
 		</plugin>

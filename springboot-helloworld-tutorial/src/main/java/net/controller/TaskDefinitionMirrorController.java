@@ -25,7 +25,7 @@ import net.repository.TaskDefinitionMirror;
 
 @CrossOrigin(origins = "http://localhost:4200")
 @RestController
-@RequestMapping("/testMirror")
+@RequestMapping("/taskMirror")
 
 public class TaskDefinitionMirrorController {
     @Autowired
