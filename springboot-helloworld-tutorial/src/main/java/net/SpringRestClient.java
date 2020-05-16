@@ -22,11 +22,11 @@ public class SpringRestClient {
 	private static final String UPDATE_TASK_ENDPOINT_URL = "http://localhost:8080/task/updateSingle/{id}";
 	private static final String DELETE_TASK_ENDPOINT_URL = "http://localhost:8080/task/deleteSingle/{id}";
 
-	private static final String GET_ALL_TASK_MIRROR_ENDPOINT_URL = "http://localhost:8080/taskMirro/getAll";
-	private static final String GET_TASK_MIRROR_ENDPOINT_URL = "http://localhost:8080/taskMirro/getSingle/{id}";
-	private static final String CREATE_TASK_MIRROR_ENDPOINT_URL = "http://localhost:8080/taskMirro/create";
-	private static final String UPDATE_TASK_MIRROR_ENDPOINT_URL = "http://localhost:8080/taskMirro/updateSingle/{id}";
-	private static final String DELETE_TASK_MIRROR_ENDPOINT_URL = "http://localhost:8080/taskMirro/deleteSingle/{id}";
+	private static final String GET_ALL_TASK_MIRROR_ENDPOINT_URL = "http://localhost:8080/taskMirror/getAll";
+	private static final String GET_TASK_MIRROR_ENDPOINT_URL = "http://localhost:8080/taskMirror/getSingle/{id}";
+	private static final String CREATE_TASK_MIRROR_ENDPOINT_URL = "http://localhost:8080/taskMirror/create";
+	private static final String UPDATE_TASK_MIRROR_ENDPOINT_URL = "http://localhost:8080/taskMirror/updateSingle/{id}";
+	private static final String DELETE_TASK_MIRROR_ENDPOINT_URL = "http://localhost:8080/taskMirror/deleteSingle/{id}";
 
 
 	private static RestTemplate restTemplate = new RestTemplate();
